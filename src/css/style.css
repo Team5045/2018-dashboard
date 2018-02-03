@@ -86,7 +86,6 @@ article {
 }
 svg * {
     stroke: white;
-    fill: #222;
     stroke-width: 2;
     -webkit-transform-origin: center;
     -ms-transform-origin: center;
@@ -135,28 +134,4 @@ aside {
 }
 aside > * {
     margin-bottom: 20px;
-}
-#login {
-    position: fixed;
-    display: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8)
-}
-body.login #login {
-    display: flex;
-}
-#login :disabled {
-    opacity: 0.6;
-}
-#login > * {
-    height: 40px;
-}
-#login > button {
-    margin-left: 5px;
 }

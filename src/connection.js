@@ -22,7 +22,6 @@ onkeydown = key => {
 function onRobotConnection(connected) {
     var state = connected ? 'Robot connected!' : 'Robot disconnected.';
     console.log(state);
-    ui.robotState.textContent = state;
     if (connected) {
         // On connect hide the connect popup
         document.body.classList.toggle('login', false);

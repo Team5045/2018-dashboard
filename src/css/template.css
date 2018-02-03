@@ -55,9 +55,8 @@
     font-family: 'Bungee Shade', cursive;
     font-weight: bolder;
     text-align: center;
-    align-content: center;
-    font-size: 6vw;
-    padding-top: 2vh;
+    align-self: center;
+    font-size: 8vh;
     border: .25vmin dashed lightgrey;    
     }
 .auto {

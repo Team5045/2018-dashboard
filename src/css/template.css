@@ -13,7 +13,8 @@
 .video {
     grid-column: 2 / 18; 
     grid-row: 8 / 24;
-    border: .25vmin dashed lightgrey;    
+    border: .25vmin dashed lightgrey;
+    background-image: url('http://10.50.45.94:5800');
 }
 .player1 {
     grid-column: 24 / 30;
@@ -55,8 +56,8 @@
     font-weight: bolder;
     text-align: center;
     align-content: center;
-    padding-top: 5%;
-    font-size: 12vh;
+    font-size: 6vw;
+    padding-top: 2vh;
     border: .25vmin dashed lightgrey;    
     }
 .auto {

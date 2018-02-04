@@ -97,6 +97,7 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
         else {
             table.rows[pos[i]].cells[2].innerHTML = dictionary[i];        
         }
+        /*
         if (values.includes('/robot/driver/AButton')){
             if (dictionary['/robot/driver/AButton']){
                 lpath[13].setAttribute("fill", "white");                
@@ -172,6 +173,7 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
                 rpath[14].setAttribute("fill", "#222");
             }
         }
+        */
         
     }
 }, true);

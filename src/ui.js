@@ -1,6 +1,7 @@
 var table = document.getElementById("mytable");
 var timer = document.getElementById("timer");
 var autoSelect = document.getElementById("autoSelect");
+
 var lpath = [
     document.getElementById('lpath1'),
     document.getElementById('lpath2'),
@@ -38,7 +39,7 @@ var rpath = [
     document.getElementById('rpath16') //b
 ];
 var dictionary = {};
-
+var pids = {};
 NetworkTables.addKeyListener('/robot/time', (key, value) => {
     // This is an example of how a dashboard could display the remaining time in a match.
     // We assume here that value is an integer representing the number of seconds left.
@@ -68,115 +69,6 @@ NetworkTables.addKeyListener('/SmartDashboard/Autonomous Mode/selected', (key, v
 autoSelect.onchange = function() {
     NetworkTables.putValue('/SmartDashboard/Autonomous Mode/selected', this.value);
 };
-NetworkTables.addGlobalListener(function(key, value, isNew){
-    for (var value in NetworkTables.getKeys()) {
-        dictionary[NetworkTables.getKeys()[value]] = NetworkTables.getValue(NetworkTables.getKeys()[value]);
-    }
-    for (var i in dictionary) {
-        var values = [];
-        var pos = {};
-        for (var j in table.rows) {
-            if (table.rows[j].cells) {
-                values.push(table.rows[j].cells[0].innerHTML);
-                pos[table.rows[j].cells[0].innerHTML] = parseInt(j);
-            }
-        }
-        if (! values.includes(i)) {
-            var row = table.insertRow();
-            var cell0 = row.insertCell(0);
-            var cell1 = row.insertCell(1);
-            var cell2 = row.insertCell(2);
-            cell0.innerHTML = i;
-            cell1.innerHTML = String(typeof dictionary[i]);
-            cell2.innerHTML = dictionary[i];
-            cell2.contentEditable = true;
-            cell2.addEventListener('blur', function(){
-                NetworkTables.putValue(i,cell2.innerHTML)
-             });
-        }
-        else {
-            table.rows[pos[i]].cells[2].innerHTML = dictionary[i];        
-        }
-        /*
-        if (values.includes('/robot/driver/AButton')){
-            if (dictionary['/robot/driver/AButton']){
-                lpath[13].setAttribute("fill", "white");                
-            }
-            else {
-                lpath[13].setAttribute("fill", "#222");                
-            }
-            if (dictionary['/robot/driver/BButton']){
-                lpath[15].setAttribute("fill", "white");
-            }
-            else {
-                lpath[15].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/driver/BackButton']){
-                lpath[7].setAttribute("fill", "white");
-            }
-            else {
-                lpath[7].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/driver/StartButton']){
-                lpath[9].setAttribute("fill", "white");
-            }
-            else {
-                lpath[9].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/driver/XButton']){
-                lpath[12].setAttribute("fill", "white");
-            }
-            else {
-                lpath[12].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/driver/YButton']){
-                lpath[14].setAttribute("fill", "white");
-            }
-            else {
-                lpath[14].setAttribute("fill", "#222");
-            }
-
-            if (dictionary['/robot/operator/AButton']){
-                rpath[13].setAttribute("fill", "white");                
-            }
-            else {
-                rpath[13].setAttribute("fill", "#222");                
-            }
-            if (dictionary['/robot/operator/BButton']){
-                rpath[15].setAttribute("fill", "white");
-            }
-            else {
-                rpath[15].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/operator/BackButton']){
-                rpath[7].setAttribute("fill", "white");
-            }
-            else {
-                rpath[7].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/operator/StartButton']){
-                rpath[9].setAttribute("fill", "white");
-            }
-            else {
-                rpath[9].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/operator/XButton']){
-                rpath[12].setAttribute("fill", "white");
-            }
-            else {
-                rpath[12].setAttribute("fill", "#222");
-            }
-            if (dictionary['/robot/operator/YButton']){
-                rpath[14].setAttribute("fill", "white");
-            }
-            else {
-                rpath[14].setAttribute("fill", "#222");
-            }
-        }
-        */
-        
-    }
-}, true);
 
 for (var it in lpath) {
     path = lpath[it];
@@ -186,3 +78,61 @@ for (var it in rpath) {
     path = rpath[it];
     path.setAttribute("fill", "#222");
 }
+
+NetworkTables.addGlobalListener(function(key, value, isNew){
+    if (isNew) {
+        var row = table.insertRow();
+        row.id = key;
+        var c0 = row.insertCell(0);
+        var c1 = row.insertCell(1);
+        var c2 = row.insertCell(2);
+        c0.textContent = key;
+        c1.textContent = typeof value;
+        c2.textContent = value;
+        if (['kP','kI','kD','kH'].includes(key.slice(-2))) {
+            pids[key.slice(0,-2)] = {
+                'value':1,
+                'setpoint':1,
+                'error':1,
+            };
+            console.log(pids)
+        }
+        }
+    else {
+        var row = document.getElementById(key);
+        row.cells[2].textContent = value;
+    }
+});
+var data;
+var options = {
+    scales: {
+        xAxes: [{
+            ticks: {
+                display: true,
+                fontColor: "#FFF"
+            }
+        }],
+        yAxes: [{
+            ticks: {
+                display: true,  
+                fontColor: "#FFF"
+            }
+        }]
+    }
+};
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: options
+});
+
+setInterval(function(){
+    for (var i in Object.keys(pids)) {
+        pids[i] = {
+            'value': NetworkTables.getValue(i+'value'),
+            'setpoint': NetworkTables.getValue(i+'setpoint'),
+            'error': NetworkTables.getValue(i+'error')
+        }
+    }
+}, 1);

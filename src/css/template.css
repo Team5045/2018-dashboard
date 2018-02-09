@@ -1,7 +1,5 @@
 .wrapper {
     display: grid;
-    height: 100vh;
-    width: 100vw;
     background: #222;
     color: white;
     min-width: 0;
@@ -10,6 +8,8 @@
     font-family: 'Roboto', sans-serif;
     overflow: hidden;    
     padding: 0;
+    height: 100vh;
+    width: 100vw;
 }
 .video {
     grid-column: 2 / 18; 
@@ -71,12 +71,14 @@
     color:white;
     font-size: 2vmin;
     padding-top: 2vh;
+    border: .25vmin solid lightgrey;    
 }
 .tunable {
     grid-column: 18 / 32;
     grid-row: 8 / 24;
     overflow-y: scroll;
     overflow-wrap: break-word;
+    border: .25vmin solid lightgrey;
 }
 .graph {
     grid-column: 2 / 18; 

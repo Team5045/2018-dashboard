@@ -5,15 +5,27 @@ var valueData = [{x:0,y:0}];
 var j = 0;
 var start = Date.now();
 
-function debounce(fn, delay) {
-    var timer = null;
-    return function() {
-        var context = this, args = arguments
-        clearTimeout(timer);
-        timer = setTimeout(function() {
-            fn.apply(context, args);
-        },delay);
-    };
+function throttle(fn, threshhold, scope) {
+  threshhold || (threshhold = 250);
+  var last,
+      deferTimer;
+  return function () {
+    var context = scope || this;
+
+    var now = +new Date,
+        args = arguments;
+    if (last && now < last + threshhold) {
+      // hold on to it
+      clearTimeout(deferTimer);
+      deferTimer = setTimeout(function () {
+        last = now;
+        fn.apply(context, args);
+      }, threshhold);
+    } else {
+      last = now;
+      fn.apply(context, args);
+    }
+  };
 }
 var lineChart = new Chart('myChart', {
     type: 'line',
@@ -42,7 +54,14 @@ var lineChart = new Chart('myChart', {
             }
         ]
     },
-    options: {  
+    options: {
+        animation: {
+            duration: 0,
+        },
+        hover: {
+            animationDuration: 0,
+        },
+        responsiveAnimationDuration: 0,
         scales: {
             xAxes: [{
                 type: 'linear',
@@ -77,18 +96,58 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
                     y: value,
                     x: (Date.now()-start)
                 });
+                if (valueData.length>500){
+                    errorData = errorData.slice(500, -1);
+                    setpointData = setpointData.slice(500, -1);
+                    valueData = valueData.slice(500, -1);                    
+                }
             }
             else if (i=='error'){
                 errorData.push({
                     y: value,
                     x: (Date.now()-start)
                 });
+                if (errorData.length>500){
+                    errorData = errorData.slice(500, -1);
+                    setpointData = setpointData.slice(500, -1);
+                    valueData = valueData.slice(500, -1);                    
+                }
             }
             setpointData.push({
                 y: NetworkTables.getValue(key.split('/').slice(0,-1).join('/')+'/setpoint'),          
                 x: (Date.now()-start)
             });
-            lineChart.update(0);
+            if (setpointData.length>500){
+                errorData = errorData.slice(500, -1);
+                setpointData = setpointData.slice(500, -1);
+                valueData = valueData.slice(500, -1);                    
+            }
+        lineChart.config.data = {
+            datasets:[
+                {
+                    label: "Error",
+                    borderColor	: 'red', 
+                    backgroundColor	: 'red', 
+                    data: errorData,
+                    fill: false
+                },
+                {
+                    label: "Setpoint",
+                    borderColor	: 'grey',
+                    backgroundColor	: 'grey',                 
+                    data: setpointData,
+                    fill: false
+                },
+                {
+                    label: "Value",
+                    borderColor	: 'black',
+                    backgroundColor	: 'black',
+                    data: valueData,
+                    fill: false
+                }
+            ]
+        }
+        lineChart.update(10);
         }
         
     }

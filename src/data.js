@@ -3,9 +3,7 @@ var errorData = [{x:0,y:0}];
 var setpointData = [{x:0,y:0}];
 var valueData = [{x:0,y:0}];
 var j = 0;
-var time1 = Date.now();
-var time2 = Date.now();
-var time3 = Date.now();
+var start = Date.now();
 
 function debounce(fn, delay) {
     var timer = null;
@@ -77,24 +75,19 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
             if (i=='value'){
                 valueData.push({
                     y: value,
-                    x: Date.now()-time1+valueData[valueData.length-1].y
+                    x: (Date.now()-start)
                 });
-                time1 = Date.now()
-            }
-            else if (i=='setpoint'){
-                setpointData.push({
-                    y: value,
-                    x: Date.now()-time2+setpointData[setpointData.length-1].y
-                });
-                time2 = Date.now()     
             }
             else if (i=='error'){
                 errorData.push({
                     y: value,
-                    x: Date.now()-time3+errorData[errorData.length-1].y
+                    x: (Date.now()-start)
                 });
-                time3 = Date.now()
             }
+            setpointData.push({
+                y: NetworkTables.getValue(key.split('/').slice(0,-1).join('/')+'/setpoint'),          
+                x: (Date.now()-start)
+            });
             lineChart.update(0);
         }
         

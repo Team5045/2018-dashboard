@@ -43,21 +43,24 @@ var lineChart = new Chart('myChart', {
                 borderColor	: 'red', 
                 backgroundColor	: 'red', 
                 data: errorData,
-                fill: false
+                fill: false,
+                pointRadius: 0
             },
             {
                 label: "Setpoint",
-                borderColor	: 'grey',
-                backgroundColor	: 'grey',                 
+                borderColor	: 'grey', 
+                backgroundColor	: 'grey', 
                 data: setpointData,
-                fill: false
+                fill: false,
+                pointRadius: 0
             },
             {
                 label: "Value",
                 borderColor	: 'black',
                 backgroundColor	: 'black',
                 data: valueData,
-                fill: false
+                fill: false,
+                pointRadius: 0
             }
         ]
     },
@@ -210,21 +213,24 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
                         borderColor	: 'red', 
                         backgroundColor	: 'red', 
                         data: errorData,
-                        fill: false
+                        fill: false,
+                        pointRadius: 0
                     },
                     {
                         label: "Setpoint",
                         borderColor	: 'grey',
                         backgroundColor	: 'grey',                 
                         data: setpointData,
-                        fill: false
+                         fill: false,
+                         pointRadius: 0
                     },
                     {
                         label: "Value",
                         borderColor	: 'black',
                         backgroundColor	: 'black',
                         data: valueData,
-                        fill: false
+                        fill: false,
+                        pointRadius: 0
                     }
                 ]
             }

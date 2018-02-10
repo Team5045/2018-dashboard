@@ -30,11 +30,12 @@
             <p id='velocity'>0 m/s</p>
             <p id='acceleration'>0 m/s<sup>2</sup></p>
         </div>
-        <div class="graph">
+        <div class="graph" id='graph'>
             <canvas id="myChart"></canvas>                
         </div>
-        <div class='settings'>
+        <div class='settings' id='settings'>
             <select id='pids'></select><button id='clear'>Clear</button>
+            Error: <input type="checkbox" id='error'>
         </div>
         <div class="tunable">
             <table id="mytable">

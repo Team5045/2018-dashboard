@@ -181,12 +181,13 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
                         x: (Date.now()-start)
                     });
                     if (valueData.length>250){
-                        errorData = errorData.slice(250, -1);
+                        if (document.getElementById('error').checked){                        
+                        errorData = errorData.slice(250, -1);}
                         setpointData = setpointData.slice(250, -1);
                         valueData = valueData.slice(250, -1);                    
                     }
                 }
-                else if (i=='error'){
+                else if (i=='error' && document.getElementById('error').checked){
                     errorData.push({
                         y: value,
                         x: (Date.now()-start)
@@ -202,11 +203,97 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
                     x: (Date.now()-start)
                 });
                 if (setpointData.length>250){
-                    errorData = errorData.slice(250, -1);
+                    if (document.getElementById('error').checked){
+                        errorData = errorData.slice(250, -1);}
                     setpointData = setpointData.slice(250, -1);
                     valueData = valueData.slice(250, -1);                    
                 }
-            lineChart.config.data = {
+                if (document.getElementById('error').checked){                    
+                    lineChart.config.data = {
+                        datasets:[
+                            {
+                                label: "Error",
+                                borderColor	: 'red', 
+                                backgroundColor	: 'red', 
+                                data: errorData,
+                                fill: false,
+                                pointRadius: 0
+                            },
+                            {
+                                label: "Setpoint",
+                                borderColor	: 'grey',
+                                backgroundColor	: 'grey',                 
+                                data: setpointData,
+                                fill: false,
+                                pointRadius: 0
+                            },
+                            {
+                                label: "Value",
+                                borderColor	: 'black',
+                                backgroundColor	: 'black',
+                                data: valueData,
+                                fill: false,
+                                pointRadius: 0
+                            }
+                        ]
+                    }
+                }
+                else {                    
+                    lineChart.config.data = {
+                        datasets:[
+                            {
+                                label: "Error",
+                                borderColor	: 'red', 
+                                backgroundColor	: 'red', 
+                                data: errorData,
+                                fill: false,
+                                pointRadius: 0
+                            },
+                            {
+                                label: "Setpoint",
+                                borderColor	: 'grey',
+                                backgroundColor	: 'grey',                 
+                                data: setpointData,
+                                fill: false,
+                                pointRadius: 0
+                            },
+                            {
+                                label: "Value",
+                                borderColor	: 'black',
+                                backgroundColor	: 'black',
+                                data: valueData,
+                                fill: false,
+                                pointRadius: 0
+                            }
+                        ]
+                    }
+                };
+                lineChart.update(10);
+            }
+        }
+    }
+});
+document.getElementById("pids").addEventListener('change', function(){
+    var selected = document.getElementById('pids').value;
+    if (selected=='Limelight'){
+        while (document.getElementById('graph').firstChild) {
+            document.getElementById('graph').removeChild(document.getElementById('graph').firstChild);
+        }
+        document.getElementById("graph").backgroundColor = '#222';
+        document.getElementById("graph").classList.remove('graph');
+        document.getElementById("graph").classList.add('video');
+    }
+    else {
+        if(document.getElementById("graph").classList == 'video'){
+            document.getElementById("graph").backgroundColor = '#222';
+            document.getElementById("graph").classList.remove('video');
+            document.getElementById("graph").classList.add('graph');
+    
+        var canvas = document.getElementById('graph').appendChild(document.createElement('canvas'));
+        canvas.id = 'myChart';
+        lineChart = new Chart('myChart', {
+            type: 'line',
+            data: {
                 datasets:[
                     {
                         label: "Error",
@@ -218,11 +305,11 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
                     },
                     {
                         label: "Setpoint",
-                        borderColor	: 'grey',
-                        backgroundColor	: 'grey',                 
+                        borderColor	: 'grey', 
+                        backgroundColor	: 'grey', 
                         data: setpointData,
-                         fill: false,
-                         pointRadius: 0
+                        fill: false,
+                        pointRadius: 0
                     },
                     {
                         label: "Value",
@@ -233,10 +320,24 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
                         pointRadius: 0
                     }
                 ]
+            },
+            options: {
+                animation: {
+                    duration: 0,
+                },
+                hover: {
+                    animationDuration: 0,
+                },
+                responsiveAnimationDuration: 0,
+                scales: {
+                    xAxes: [{
+                        type: 'linear',
+                        position: 'bottom'
+                    }]
+                }
             }
-            lineChart.update(10);
-            }
-    
-            }
-        }
+        });
+        
+    }
+}
 });

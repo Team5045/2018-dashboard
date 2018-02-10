@@ -88,21 +88,24 @@ document.getElementById("clear").addEventListener("click", function( event ) {
                 borderColor	: 'red', 
                 backgroundColor	: 'red', 
                 data: errorData,
-                fill: false
+                fill: false,
+                pointRadius: 0
             },
             {
                 label: "Setpoint",
                 borderColor	: 'grey',
                 backgroundColor	: 'grey',                 
                 data: setpointData,
-                fill: false
+                fill: false,
+                pointRadius: 0
             },
             {
                 label: "Value",
                 borderColor	: 'black',
                 backgroundColor	: 'black',
                 data: valueData,
-                fill: false
+                fill: false,
+                pointRadius: 0
             }
         ]
     }

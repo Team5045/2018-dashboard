@@ -1,7 +1,8 @@
 var table = document.getElementById("mytable");
-var errorData = [{x:0,y:0}];
-var setpointData = [{x:0,y:0}];
-var valueData = [{x:0,y:0}];
+var errorData = [];
+var setpointData = [];
+var valueData = [];
+var pids = [];
 var j = 0;
 var start = Date.now();
 
@@ -26,6 +27,12 @@ function throttle(fn, threshhold, scope) {
       fn.apply(context, args);
     }
   };
+}
+function uniq(a) {
+    var seen = {};
+    return a.filter(function(item) {
+        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+    });
 }
 var lineChart = new Chart('myChart', {
     type: 'line',
@@ -70,7 +77,38 @@ var lineChart = new Chart('myChart', {
         }
     }
 });
-
+document.getElementById("clear").addEventListener("click", function( event ) {
+    errorData = [];
+    setpointData = [];
+    valueData = [];
+    lineChart.config.data = {
+        datasets:[
+            {
+                label: "Error",
+                borderColor	: 'red', 
+                backgroundColor	: 'red', 
+                data: errorData,
+                fill: false
+            },
+            {
+                label: "Setpoint",
+                borderColor	: 'grey',
+                backgroundColor	: 'grey',                 
+                data: setpointData,
+                fill: false
+            },
+            {
+                label: "Value",
+                borderColor	: 'black',
+                backgroundColor	: 'black',
+                data: valueData,
+                fill: false
+            }
+        ]
+    }
+    lineChart.update(0);
+    console.log()
+}, false);
 NetworkTables.addGlobalListener(function(key, value, isNew){
     if (isNew) {
         var row = table.insertRow();
@@ -85,70 +123,111 @@ NetworkTables.addGlobalListener(function(key, value, isNew){
         c2.addEventListener('blur', function(){
             NetworkTables.putValue(c2.parentElement.id,c2.textContent);
         })
+        if (key.includes('setpoint')) {
+            document.getElementById("pids").options.length = 0;            
+            pids.push(key.split('/').slice(0,-1).join('/'));
+            pids = uniq(pids);
+            pids.forEach(function(i){
+                var option = document.createElement('option');
+                option.appendChild(document.createTextNode(i));
+                document.getElementById("pids").appendChild(option);        
+            });
+            var option = document.createElement('option');
+            option.appendChild(document.createTextNode('Limelight'));
+            document.getElementById("pids").appendChild(option);        
+        }
+        else if (key.includes('value')) {
+            document.getElementById("pids").options.length = 0;                        
+            pids.push(key.split('/').slice(0,-1).join('/'));
+            pids = uniq(pids);
+            pids.forEach(function(i){
+                var option = document.createElement('option');
+                option.appendChild(document.createTextNode(i));
+                document.getElementById("pids").appendChild(option);
+            });
+            var option = document.createElement('option');
+            option.appendChild(document.createTextNode('Limelight'));
+            document.getElementById("pids").appendChild(option);        
+        }
+        else if  (key.includes('error')) {
+            document.getElementById("pids").options.length = 0;            
+            pids.push(key.split('/').slice(0,-1).join('/'));
+            pids = uniq(pids);
+            pids.forEach(function(i){
+                var option = document.createElement('option');
+                option.appendChild(document.createTextNode(i));
+                document.getElementById("pids").appendChild(option);      
+            });
+            var option = document.createElement('option');
+            option.appendChild(document.createTextNode('Limelight'));
+            document.getElementById("pids").appendChild(option);
+        }
     }
     else {
         var row = document.getElementById(key);
         row.cells[2].textContent = value;
         var i = key.split('/').slice(-1).join('/');
-        if (['value','setpoint','error'].includes(i)) {
-            if (i=='value'){
-                valueData.push({
-                    y: value,
+        if (pids.includes(key.split('/').slice(0,-1).join('/'))){
+            if (['value','setpoint','error'].includes(i)) {
+                if (i=='value'){
+                    valueData.push({
+                        y: value,
+                        x: (Date.now()-start)
+                    });
+                    if (valueData.length>250){
+                        errorData = errorData.slice(250, -1);
+                        setpointData = setpointData.slice(250, -1);
+                        valueData = valueData.slice(250, -1);                    
+                    }
+                }
+                else if (i=='error'){
+                    errorData.push({
+                        y: value,
+                        x: (Date.now()-start)
+                    });
+                    if (errorData.length>250){
+                        errorData = errorData.slice(250, -1);
+                        setpointData = setpointData.slice(250, -1);
+                        valueData = valueData.slice(250, -1);                    
+                    }
+                }
+                setpointData.push({
+                    y: NetworkTables.getValue(key.split('/').slice(0,-1).join('/')+'/setpoint'),          
                     x: (Date.now()-start)
                 });
-                if (valueData.length>500){
-                    errorData = errorData.slice(500, -1);
-                    setpointData = setpointData.slice(500, -1);
-                    valueData = valueData.slice(500, -1);                    
+                if (setpointData.length>250){
+                    errorData = errorData.slice(250, -1);
+                    setpointData = setpointData.slice(250, -1);
+                    valueData = valueData.slice(250, -1);                    
                 }
+            lineChart.config.data = {
+                datasets:[
+                    {
+                        label: "Error",
+                        borderColor	: 'red', 
+                        backgroundColor	: 'red', 
+                        data: errorData,
+                        fill: false
+                    },
+                    {
+                        label: "Setpoint",
+                        borderColor	: 'grey',
+                        backgroundColor	: 'grey',                 
+                        data: setpointData,
+                        fill: false
+                    },
+                    {
+                        label: "Value",
+                        borderColor	: 'black',
+                        backgroundColor	: 'black',
+                        data: valueData,
+                        fill: false
+                    }
+                ]
             }
-            else if (i=='error'){
-                errorData.push({
-                    y: value,
-                    x: (Date.now()-start)
-                });
-                if (errorData.length>500){
-                    errorData = errorData.slice(500, -1);
-                    setpointData = setpointData.slice(500, -1);
-                    valueData = valueData.slice(500, -1);                    
-                }
+            lineChart.update(10);
             }
-            setpointData.push({
-                y: NetworkTables.getValue(key.split('/').slice(0,-1).join('/')+'/setpoint'),          
-                x: (Date.now()-start)
-            });
-            if (setpointData.length>500){
-                errorData = errorData.slice(500, -1);
-                setpointData = setpointData.slice(500, -1);
-                valueData = valueData.slice(500, -1);                    
+    
             }
-        lineChart.config.data = {
-            datasets:[
-                {
-                    label: "Error",
-                    borderColor	: 'red', 
-                    backgroundColor	: 'red', 
-                    data: errorData,
-                    fill: false
-                },
-                {
-                    label: "Setpoint",
-                    borderColor	: 'grey',
-                    backgroundColor	: 'grey',                 
-                    data: setpointData,
-                    fill: false
-                },
-                {
-                    label: "Value",
-                    borderColor	: 'black',
-                    backgroundColor	: 'black',
-                    data: valueData,
-                    fill: false
-                }
-            ]
         }
-        lineChart.update(10);
-        }
-        
-    }
 });

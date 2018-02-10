@@ -82,11 +82,36 @@
 }
 .graph {
     grid-column: 2 / 18; 
-    grid-row: 8 / 24;
+    grid-row: 10 / 24;
     border: .25vmin solid lightgrey;
-    display: grid;
-    align-items: center;
     background-color:white;
+}
+.settings {
+    grid-column: 2 / 18;
+    grid-row: 8 / 10;
+    border: .25vmin solid lightgrey;
+    background-color:#222;
+    white-space: nowrap;
+    text-align: center;
+    display: -ms-inline-grid;
+}
+#clear {
+    width:15vw;
+    height:2rem;
+    margin-top: 2vh;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+}
+#pids {
+    width:15vw;
+    height:2rem;
+    margin-top: 2vh;    
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
 }
 select.auton {
     width:10vw;

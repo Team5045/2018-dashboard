@@ -15,9 +15,11 @@
     grid-column: 2 / 18; 
     grid-row: 8 / 24;
     border: .25vmin solid lightgrey;
+    background-color: #222;
     background-image: url('http://10.50.45.11:5800');
+    background-size: contain;
     background-repeat: no-repeat;
-    background-size: cover;
+
 }
 .player1 {
     grid-column: 18 / 24;    

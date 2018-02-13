@@ -6,28 +6,6 @@ var pids = [];
 var j = 0;
 var start = Date.now();
 
-function throttle(fn, threshhold, scope) {
-  threshhold || (threshhold = 250);
-  var last,
-      deferTimer;
-  return function () {
-    var context = scope || this;
-
-    var now = +new Date,
-        args = arguments;
-    if (last && now < last + threshhold) {
-      // hold on to it
-      clearTimeout(deferTimer);
-      deferTimer = setTimeout(function () {
-        last = now;
-        fn.apply(context, args);
-      }, threshhold);
-    } else {
-      last = now;
-      fn.apply(context, args);
-    }
-  };
-}
 function uniq(a) {
     var seen = {};
     return a.filter(function(item) {
@@ -341,3 +319,22 @@ document.getElementById("pids").addEventListener('change', function(){
     }
 }
 });
+document.addEventListener('keydown', (event) => {
+    if (event.key=='f'){
+        if(document.getElementById('graph').style.position!='absolute'){
+            var save = document.getElementById('graph').style;
+            $('#graph').css({
+                position: 'absolute',
+                width: $(window).width(),
+                height: $(window).height()
+            });
+            lineChart.update(0);            
+        }
+        else {
+            document.getElementById('graph').style = save;
+            lineChart.update(0);
+        }
+    }
+});
+  
+  

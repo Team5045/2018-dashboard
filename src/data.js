@@ -94,7 +94,7 @@ document.getElementById("clear").addEventListener("click", function( event ) {
     console.log()
 }, false);
 NetworkTables.addGlobalListener(function(key, value, isNew){
-    if (isNew) {
+    if (isNew || document.getElementById('key')==null) {
         var row = table.insertRow();
         row.id = key;
         var c0 = row.insertCell(0);

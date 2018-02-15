@@ -24,7 +24,6 @@
     grid-column: 2 / 18; 
     grid-row: 8 / 24;
     border: .25vmin solid lightgrey;
-    background-color: #222;
     background-image: url('http://10.50.45.11:5800');
     background-size: contain;
     background-repeat: no-repeat;
@@ -88,8 +87,6 @@
     grid-column: 18 / 32;
     grid-row: 8 / 24;
     overflow-y: scroll;
-    overflow-wrap: break-word;
-    border: .25vmin solid lightgrey;
 }
 .graph {
     grid-column: 2 / 18; 
@@ -100,11 +97,9 @@
 .settings {
     grid-column: 2 / 18;
     grid-row: 8 / 10;
-    border: .25vmin solid lightgrey;
-    background-color:#222;
+    border: .25vmin solid lightgrey;   
     white-space: nowrap;
     text-align: center;
-    display: -ms-inline-grid;
 }
 #clear {
     width:15vw;
@@ -130,7 +125,7 @@ select.auton {
 }
 table, th, td {
     overflow-x: hidden;    
-    border: 1px solid white;
+    border: 1px solid lightgrey;
     text-align: center;
     text-overflow: ellipsis;
 }
@@ -150,26 +145,12 @@ table {
   }
 
 #login {
-    position: fixed;
-    display: none;
-    flex-direction: row;
-    justify-content: center;
+    grid-column: 1/32;
+    grid-row: 1/24;
+    text-align: center;
     align-items: center;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background-color: rgba(0, 0, 0, 0.8)
-}
-body.login #login {
-    display: flex;
 }
 #login :disabled {
     opacity: 0.6;
-}
-#login > * {
-    height: 40px;
-}
-#login > button {
-    margin-left: 5px;
 }

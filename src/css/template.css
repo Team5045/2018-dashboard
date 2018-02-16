@@ -22,11 +22,13 @@
 }
 .video {
     grid-column: 2 / 18; 
-    grid-row: 8 / 24;
+    grid-row: 10 / 24;
     border: .25vmin solid lightgrey;
-    background-image: url('http://10.50.45.11:5800');
+    align-content: center;
+    background-image: url('http://10.50.45.78:5800');
     background-size: contain;
     background-repeat: no-repeat;
+    background-color: '#222';
 
 }
 .player1 {

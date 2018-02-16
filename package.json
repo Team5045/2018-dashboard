@@ -5,7 +5,7 @@
   "description": "Robot control dashboard boilerplate for FRC.",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron . --inspect=5858",
     "package-mac": "electron-packager . --platform=darwin --icon=images/icon.icns --out dist/",
     "package-linux": "electron-packager . --platform=linux --icon=images/icon.png --out dist/",
     "package-win": "electron-packager . --platform=win32 --icon=images/icon.ico --out dist/"

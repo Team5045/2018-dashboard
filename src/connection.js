@@ -32,12 +32,6 @@ else {
     };
     var rowcount = document.getElementById('mytable').rows.length;
     var optcount = document.getElementById('autoSelect').children.length;
-    for (i=0;i<rowcount-1;i++){
-        document.getElementById('mytable').deleteRow(-1);
-    }
-    for (i=0;i<optcount+1;i++){
-        document.getElementById('autoSelect').remove(0);
-    }
     // Enable the input and the button
     address.disabled = connect.disabled = false;
     connect.textContent = 'Connect';

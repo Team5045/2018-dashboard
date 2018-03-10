@@ -1,11 +1,10 @@
 {
   "name": "FRCDashboard",
-  "productName": "FRCDashBoard",
   "version": "2.1.0",
   "description": "Robot control dashboard boilerplate for FRC.",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron . --inspect=5858",
+    "start": "electron .",
     "package-mac": "electron-packager . --platform=darwin --icon=images/icon.icns --out dist/",
     "package-linux": "electron-packager . --platform=linux --icon=images/icon.png --out dist/",
     "package-win": "electron-packager . --platform=win32 --icon=images/icon.ico --out dist/"
@@ -14,14 +13,17 @@
     "type": "git",
     "url": "git+https://github.com/FRCDashboard/FRCDashboard"
   },
+  "author": "Erik Boesen",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FRCDashboard/FRCDashboard/issues"
   },
+  "homepage": "http://frcdashboard.github.io",
   "devDependencies": {
-    "electron": "1.7.9",
+    "electron": "^1.7.12",
     "electron-packager": "^10.1.1"
   },
   "dependencies": {
-    "wpilib-nt-client": "^1.4.0"
+    "wpilib-nt-client": "^1.7.1"
   }
 }

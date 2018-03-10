@@ -330,10 +330,6 @@ document.addEventListener('keydown', (event) => {
             });
             lineChart.update(0);            
         }
-        else {
-            document.getElementById('graph').style = save;
-            lineChart.update(0);
-        }
     }
 });
   

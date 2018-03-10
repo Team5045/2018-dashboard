@@ -145,13 +145,30 @@ table {
     width: 100%;
     table-layout: fixed;
   }
+  button, input[type="text"], input[type="number"], .select-container, select {
+    color: white;
+    background: #444;
+    border: none;
+    font-size: 14px;
+    padding: 6px 8px;
+    cursor: pointer;
+    outline: 0;
+}
 
-#login {
-    grid-column: 1/32;
-    grid-row: 1/24;
-    text-align: center;
+  #login {
+    position: fixed;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.8)
+}
+body.login #login {
+    display: flex;
 }
 #login :disabled {
     opacity: 0.6;

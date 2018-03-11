@@ -21,6 +21,33 @@ if (connected) {
     // On connect hide the connect popup
     document.getElementById('login').style.display='none';
     document.body.classList.toggle('login', false);
+    while (document.getElementById('graph').firstChild) {
+        document.getElementById('graph').removeChild(document.getElementById('graph').firstChild);
+    }
+    document.getElementById("graph").backgroundColor = '#222';
+    document.getElementById("graph").classList.remove('graph');
+    document.getElementById("graph").classList.add('video');
+        $( ".tunable" ).css({
+            'grid-column': '1 / 12',
+            'grid-row': '6 / 26'  
+        });
+        $( "#graph" ).css({
+            'grid-column': '12 / 34',
+            'grid-row': '1 / 26'  
+        });
+        $('.title').css({
+            'display': 'none'
+        });
+        $('.auto').css({
+            'grid-column': '1 / 12',
+            'grid-row': '1 / 6'
+        });
+        $('.settings').css({
+            'display': 'none'
+        });
+        $('.timer').css({
+            'display': 'none'
+        });
 }
 else {
     // On disconnect show the connect popup

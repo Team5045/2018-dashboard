@@ -318,7 +318,7 @@ document.getElementById("pids").addEventListener('change', function(){
 }
 });
 var mode = '';
-var mode2 = '';
+var mode2 = 'q';
 document.addEventListener('keydown', (event) => {
     if (event.key=='f'){
         if (mode!='q') {

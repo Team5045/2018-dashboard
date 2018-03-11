@@ -7,6 +7,11 @@
     font-family: "Bungee Shade";
     src: url(../fonts/Bungee_Shade/BungeeShade-Regular.ttf) format("truetype");
 }
+body {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+}
 .wrapper {
     display: grid;
     background: #222;
@@ -25,7 +30,7 @@
     grid-row: 10 / 24;
     border: .25vmin solid lightgrey;
     align-content: center;
-    background-image: url('http://10.50.45.11:5800');
+    background-color: green;
     background-size: contain;
     background-repeat: no-repeat;
     background-color: '#222';
@@ -87,7 +92,7 @@
 }
 .tunable {
     grid-column: 18 / 32;
-    grid-row: 8 / 24;
+    grid-row: 3 / 24;
     overflow-y: scroll;
 }
 .graph {
@@ -121,7 +126,7 @@
     margin-left: 2.5vw;
     margin-right: 2.5vw;
 }
-select.auton {
+select.auto {
     width:10vw;
     height:5vh;
 }

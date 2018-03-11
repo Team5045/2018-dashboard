@@ -1,4 +1,5 @@
 var autoSelect = document.getElementById("autoSelect");
+var title = document.getElementById("title");
 // Load list of prewritten autonomous modes
 NetworkTables.addKeyListener('/SmartDashboard/Autonomous Mode/options', (key, value) => {
     // Clear previous list
@@ -13,10 +14,15 @@ NetworkTables.addKeyListener('/SmartDashboard/Autonomous Mode/options', (key, va
     }
     // Set value to the already-selected mode. If there is none, nothing will happen.
     autoSelect.value = NetworkTables.getValue('/SmartDashboard/Autonomous Mode/default');
+    NetworkTables.putValue('/SmartDashboard/Autonomous Mode/selected', autoSelect.value);
 });
 
 NetworkTables.addKeyListener('/SmartDashboard/Autonomous Mode/selected', (key, value) => {
     autoSelect.value = value;
+});
+
+NetworkTables.addKeyListener('/FMSInfo/MatchNumber', (key, value) => {
+    title.innerHTML = 'Match ' + value;
 });
 
 autoSelect.addEventListener('change', function(){

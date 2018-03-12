@@ -1,5 +1,6 @@
 var autoSelect = document.getElementById("autoSelect");
 var title = document.getElementById("title");
+var timer = document.getElementById('timer');
 // Load list of prewritten autonomous modes
 NetworkTables.addKeyListener('/SmartDashboard/Autonomous Mode/options', (key, value) => {
     // Clear previous list
@@ -23,6 +24,17 @@ NetworkTables.addKeyListener('/SmartDashboard/Autonomous Mode/selected', (key, v
 
 NetworkTables.addKeyListener('/FMSInfo/MatchNumber', (key, value) => {
     title.innerHTML = 'Match ' + value;
+});
+
+NetworkTables.addKeyListener('/robot/time', (key, value) => {
+    if (Math.floor(value%60).toString().length==1) {
+        var time = '0' + Math.floor(value%60).toString();
+    }
+    else {
+        var time = Math.floor(value%60).toString()
+    }
+    timer.innerHTML = Math.floor(value/60).toString() + ':' + time;
+
 });
 
 autoSelect.addEventListener('change', function(){

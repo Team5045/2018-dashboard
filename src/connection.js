@@ -28,26 +28,57 @@ if (connected) {
     document.getElementById("graph").classList.remove('graph');
     document.getElementById("graph").classList.add('video');
         $( ".tunable" ).css({
-            'grid-column': '1 / 12',
-            'grid-row': '6 / 26'  
+            'grid-column': '1 / 13',
+            'grid-row': '10 / 26'  
         });
         $( "#graph" ).css({
-            'grid-column': '12 / 34',
+            'grid-column': '13 / 34',
             'grid-row': '1 / 26'  
         });
         $('.title').css({
             'display': 'none'
         });
-        $('.auto').css({
-            'grid-column': '1 / 12',
-            'grid-row': '1 / 6'
+        $('.timer').css({
+            'display': 'grid',
+            'grid-column': '1 / 13',
+            'grid-row': '1 / 4',
+            'font-size': '150%'
         });
+        $('.gyron').css({
+            'display': 'block',
+            'grid-column': '7 / 13',
+            'grid-row': '4 / 10'
+        });
+        $('.auto').css({
+            'display': 'block',
+            'grid-column': '1 / 7',
+            'grid-row': '4 / 10'
+        });
+        $('.auton').css({
+            'margin-top': '25%',
+            'padding-top': '5%',
+            'padding-bottom': '5%'
+        });
+        var gyron = document.getElementById('gyron');
+        var gyronum = document.getElementById('gyro-number');
+        var g1 = document.getElementById('g1');
+        var g2 = document.getElementById('g2');
+        var rect = gyron.getBoundingClientRect();
+        var gx = (rect.right-rect.left)/2;
+        var gy = (rect.bottom-rect.top)/2;
+        var gr = Math.sqrt(gx*gx + gy*gy)/4;
+        g1.setAttribute('cx', gx);
+        g1.setAttribute('cy', gy);
+        g1.setAttribute('r', gr);
+        g2.setAttribute('cx', gx);
+        g2.setAttribute('cy', gy);
+        gyronum.setAttribute('x', gx+30);
+        gyronum .setAttribute('y', gy+30);
         $('.settings').css({
             'display': 'none'
         });
-        $('.timer').css({
-            'display': 'none'
-        });
+        mode2 = 'q';
+        lineChart.update(0);
 }
 else {
     // On disconnect show the connect popup

@@ -1,6 +1,28 @@
 var autoSelect = document.getElementById("autoSelect");
 var title = document.getElementById("title");
 var timer = document.getElementById('timer');
+let ui = {
+    gyro: {
+        container: document.getElementById('gyro'),
+        val: 0,
+        offset: 0,
+        visualVal: 0,
+        arm: document.getElementById('gyro-arm'),
+        number: document.getElementById('gyro-number')
+    }
+};
+let updateGyro = (key, value) => {
+    ui.gyro.val = value;
+    ui.gyro.visualVal = Math.floor(ui.gyro.val - ui.gyro.offset);
+    ui.gyro.visualVal %= 360;
+    if (ui.gyro.visualVal < 0) {
+        ui.gyro.visualVal += 360;
+    }
+    ui.gyro.arm.style.transform = `rotate(${ui.gyro.visualVal}deg)`;
+    ui.gyro.number.innerHTML = ui.gyro.visualVal + 'º';
+};
+NetworkTables.addKeyListener('/robot/angle', updateGyro);
+
 // Load list of prewritten autonomous modes
 NetworkTables.addKeyListener('/SmartDashboard/Autonomous Mode/options', (key, value) => {
     // Clear previous list

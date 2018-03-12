@@ -14,7 +14,6 @@
         </div>
         <div class="timer" id='timer'>2:15</div>
         <div class="auto">
-            <h2>Autonomous Chooser:</h2>
             <select name="chooser" class='auton' id='autoSelect'>
             </select>                  
         </div>
@@ -36,6 +35,13 @@
                             Value
                         </th>
                 </table>                      
+        </div>
+        <div class='gyron' id='gyron'>
+            <svg id="gyro">
+                <circle id='g1' cx="85" cy="85" r="83"></circle>
+                <circle id='g2' cx="85" cy="85" r="50"></circle>
+                <text id="gyro-number" x="90" y="115">0º</text>
+            </svg>    
         </div>
         <div id="login">
                 <input id="connect-address" type="text" value="localhost" disabled>

@@ -78,7 +78,7 @@ body {
     text-align: center;
     display: grid;
     align-items: center;
-    font-size: 8vh;
+    font-size: 150%;
     border: .25vmin solid lightgrey;    
     }
 .auto {
@@ -91,6 +91,9 @@ body {
     padding-top: 2vh;
     border: .25vmin solid lightgrey;    
 }
+.auton {
+    margin-top:15%;
+}
 .tunable {
     grid-column: 18 / 32;
     grid-row: 3 / 24;
@@ -101,6 +104,7 @@ body {
     grid-row: 10 / 24;
     border: .25vmin solid lightgrey;
     background-color:white;
+    overflow: wrap;
 }
 .settings {
     grid-column: 2 / 18;
@@ -178,4 +182,12 @@ body.login #login {
 }
 #login :disabled {
     opacity: 0.6;
+}
+.gyron{
+    display:none;
+    border: .25vmin solid lightgrey;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
 }

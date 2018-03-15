@@ -31,7 +31,6 @@ body {
     border: .25vmin solid lightgrey;
     align-content: center;
     background-image: url('http://10.50.45.11:5800');
-    background-color: green;
     background-size: contain;
     background-repeat: no-repeat;
     background-color: '#222';
@@ -92,7 +91,6 @@ body {
     border: .25vmin solid lightgrey;    
 }
 .auton {
-    margin-top:15%;
 }
 .tunable {
     grid-column: 18 / 32;
@@ -181,7 +179,7 @@ body.login #login {
     display: flex;
 }
 #login :disabled {
-    opacity: 0.6;
+    opacity: 0;
 }
 .gyron{
     display:none;

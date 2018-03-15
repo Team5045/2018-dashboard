@@ -29,7 +29,7 @@ if (connected) {
     document.getElementById("graph").classList.add('video');
         $( ".tunable" ).css({
             'grid-column': '1 / 13',
-            'grid-row': '10 / 26'  
+            'grid-row': '6 / 26'  
         });
         $( "#graph" ).css({
             'grid-column': '13 / 34',
@@ -44,20 +44,13 @@ if (connected) {
             'grid-row': '1 / 4',
             'font-size': '150%'
         });
-        $('.gyron').css({
-            'display': 'block',
-            'grid-column': '7 / 13',
-            'grid-row': '4 / 10'
-        });
         $('.auto').css({
             'display': 'block',
-            'grid-column': '1 / 7',
-            'grid-row': '4 / 10'
+            'grid-column': '1 / 13',
+            'grid-row': '4 / 6'
         });
         $('.auton').css({
-            'margin-top': '25%',
-            'padding-top': '5%',
-            'padding-bottom': '5%'
+                
         });
         var gyron = document.getElementById('gyron');
         var gyronum = document.getElementById('gyro-number');
@@ -94,7 +87,7 @@ else {
     address.disabled = connect.disabled = false;
     connect.textContent = 'Connect';
     // Add the default address and select xxxx
-    address.value = 'roborio-5045-frc.local';
+    address.value = '10.50.45.2';
     address.focus();
     // On click try to connect and disable the input and the button
     connect.onclick = () => {

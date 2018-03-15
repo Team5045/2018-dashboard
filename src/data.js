@@ -320,7 +320,7 @@ document.getElementById("pids").addEventListener('change', function(){
 var mode = '';
 var mode2 = 'q';
 document.addEventListener('keydown', (event) => {
-    if (event.key=='f'){
+    if (event.key=='fwq'){
         if (mode!='q') {
             $( ".tunable" ).css({
                 'display': 'none'
@@ -368,7 +368,7 @@ document.addEventListener('keydown', (event) => {
             lineChart.update(0);
         }
     }
-    else if (event.key=='q'){
+    else if (event.key=='qawd'){
         while (document.getElementById('graph').firstChild) {
             document.getElementById('graph').removeChild(document.getElementById('graph').firstChild);
         }

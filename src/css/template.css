@@ -30,10 +30,10 @@ body {
     grid-row: 10 / 24;
     border: .25vmin solid lightgrey;
     align-content: center;
-    background-image: url('http://10.50.45.11:5800');
+    background-image: url('10.50.45.11:5800');
     background-size: contain;
     background-repeat: no-repeat;
-    background-color: '#222';
+    background-color: 'blue';
 
 }
 .player1 {
@@ -179,7 +179,8 @@ body.login #login {
     display: flex;
 }
 #login :disabled {
-    opacity: 0;
+    opacity: 1;
+    background: '#222'
 }
 .gyron{
     display:none;

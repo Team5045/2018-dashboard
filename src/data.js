@@ -320,71 +320,26 @@ document.getElementById("pids").addEventListener('change', function(){
 var mode = '';
 var mode2 = 'q';
 document.addEventListener('keydown', (event) => {
-    if (event.key=='fwq'){
-        if (mode!='q') {
-            $( ".tunable" ).css({
-                'display': 'none'
-            });
-            $( "#graph" ).css({
-                'grid-column': '1 / 34',
-                'grid-row': '1 / 26'            
-            });
-            $('.title').css({
-                'display': 'none'
-            });
-            $('.auto').css({
-                'display': 'none'
-            });
-            $('.settings').css({
-                'display': 'none'
-            });
-            $('.timer').css({
-                'display': 'none'
-            });
-            mode = 'q';
-            lineChart.update(0);
-        }
-        else {
-            $( ".tunable" ).css({
-                'display': 'grid'
-            });
-            $('.title').css({
-                'display': 'grid'
-            });
-            $('.auto').css({
-                'display': 'block'
-            });
-            $('.settings').css({
-                'display': 'block'
-            });
-            $('.timer').css({
-                'display': 'grid'
-            });
-            $( "#graph" ).css({
-                'grid-column': '2 / 18',
-                'grid-row': '10 / 24'
-            });      
-            mode = '';
-            lineChart.update(0);
-        }
-    }
-    else if (event.key=='qawd'){
+    if (event.key=='f'){
         while (document.getElementById('graph').firstChild) {
             document.getElementById('graph').removeChild(document.getElementById('graph').firstChild);
         }
         document.getElementById("graph").backgroundColor = '#222';
         document.getElementById("graph").classList.remove('graph');
         document.getElementById("graph").classList.add('video');
-        if (mode2!='q') {
+        if (mode2!='f') {
             $( ".tunable" ).css({
+                'display': 'grid',
                 'grid-column': '1 / 13',
-                'grid-row': '10 / 26'  
+                'grid-row': '6 / 26'  
             });
             $( "#graph" ).css({
+                'display': 'grid',
                 'grid-column': '13 / 34',
                 'grid-row': '1 / 26'  
             });
             $('.title').css({
+                'display': 'grid',
                 'display': 'none'
             });
             $('.timer').css({
@@ -393,126 +348,44 @@ document.addEventListener('keydown', (event) => {
                 'grid-row': '1 / 4',
                 'font-size': '150%'
             });
-            $('.gyron').css({
-                'display': 'block',
-                'grid-column': '7 / 13',
-                'grid-row': '4 / 10'
-            });
             $('.auto').css({
-                'display': 'block',
-                'grid-column': '1 / 7',
-                'grid-row': '4 / 10'
+                'display': 'initial',
             });
             $('.auton').css({
-                'margin-top': '25%',
-                'padding-top': '5%',
-                'padding-bottom': '5%'
+                'display': 'block',
+                'margin-left': '25%',
+                'margin-right': '25%'
             });
-            var gyron = document.getElementById('gyron');
-            var gyronum = document.getElementById('gyro-number');
-            var g1 = document.getElementById('g1');
-            var g2 = document.getElementById('g2');
-            var rect = gyron.getBoundingClientRect();
-            var gx = (rect.right-rect.left)/2;
-            var gy = (rect.bottom-rect.top)/2;
-            var gr = Math.sqrt(gx*gx + gy*gy)/4;
-            g1.setAttribute('cx', gx);
-            g1.setAttribute('cy', gy);
-            g1.setAttribute('r', gr);
-            g2.setAttribute('cx', gx);
-            g2.setAttribute('cy', gy);
-            gyronum.setAttribute('x', gx+30);
-            gyronum .setAttribute('y', gy+30);
             $('.settings').css({
                 'display': 'none'
             });
-            mode2 = 'q';
+            mode2 = 'f';
             lineChart.update(0);
         }
         else {
-            if(document.getElementById("graph").classList == 'video'){
-                document.getElementById("graph").backgroundColor = '#222';
-                document.getElementById("graph").classList.remove('video');
-                document.getElementById("graph").classList.add('graph');
-        
-            var canvas = document.getElementById('graph').appendChild(document.createElement('canvas'));
-            canvas.id = 'myChart';
-            lineChart = new Chart('myChart', {
-                type: 'line',
-                data: {
-                    datasets:[
-                        {
-                            label: "Error",
-                            borderColor	: 'red', 
-                            backgroundColor	: 'red', 
-                            data: errorData,
-                            fill: false,
-                            pointRadius: 0
-                        },
-                        {
-                            label: "Setpoint",
-                            borderColor	: 'grey', 
-                            backgroundColor	: 'grey', 
-                            data: setpointData,
-                            fill: false,
-                            pointRadius: 0
-                        },
-                        {
-                            label: "Value",
-                            borderColor	: 'black',
-                            backgroundColor	: 'black',
-                            data: valueData,
-                            fill: false,
-                            pointRadius: 0
-                        }
-                    ]
-                },
-                options: {
-                    animation: {
-                        duration: 0,
-                    },
-                    hover: {
-                        animationDuration: 0,
-                    },
-                    responsiveAnimationDuration: 0,
-                    scales: {
-                        xAxes: [{
-                            type: 'linear',
-                            position: 'bottom'
-                        }]
-                    }
-                }
-            });
-            
-        }    
             $( ".tunable" ).css({
-                'grid-column': '18 / 32',
-                'grid-row': '3 / 24'
-            });
-            $('.title').css({
-                'display': 'grid'
-            });
-            $('.auto').css({
-                'grid-column': '10 / 18',
-                'grid-row': '3 / 8'
-            });
-            $('.settings').css({
-                'display': 'block'
+                'display': 'none',
+                'grid-column': '1 / 13',
+                'grid-row': '10 / 26'  
             });
             $( "#graph" ).css({
-                'grid-column': '2 / 18',
-                'grid-row': '10 / 24'
+                'grid-column': '1 / 34',
+                'grid-row': '1 / 26'  
             });
-            $('.gyron').css({
+            $('.title').css({
                 'display': 'none'
             });
             $('.timer').css({
-                'grid-column': '2 / 10',
-                'grid-row': '3 / 8',
-                'font-size': '300%'
+                'display': 'none'
+            });
+            $('.auto').css({
+                'display': 'none'
             });
             $('.auton').css({
-                'margin-top': '15%'
+                'display': 'none'
+            });
+            $('.settings').css({
+                'display': 'none'
             });
             mode2 = '';
             lineChart.update(0);

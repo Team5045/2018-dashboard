@@ -173,13 +173,12 @@ table {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8)
+    background-color: rgba(0, 0, 0, 1)
 }
 body.login #login {
     display: flex;
 }
 #login :disabled {
-    opacity: 1;
     background: '#222'
 }
 .gyron{
